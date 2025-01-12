@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Woodworking & Resin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2a2a2a;
+            --accent-color: #ab8e66;
+            --text-color: #4a4a4a;
+            --background-color: #ffffff;
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Styles */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 2rem;
+            z-index: 1000;
+            transition: var(--transition-medium);
+            background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav.scrolled {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-medium);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('/api/placeholder/1920/1080') center/cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 6rem 2rem;
+            background: #f9f9f9;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: var(--transition-medium);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition-medium);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin: -2rem auto 3rem;
+            max-width: 600px;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="#" class="nav-brand">ArtisanWood</a>
+        <div class="nav-links">
+            <a href="#products" class="nav-link">Products</a>
+            <a href="#about" class="nav-link">Info</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="#cart" class="nav-link cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Artisan Woodworking</h1>
+            <p>Where craftsmanship meets modern design</p>
+            <a href="#products" class="btn">Explore Collection</a>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <h2 class="section-title">Our Collection</h2>
+        <p class="section-subtitle">Handcrafted pieces that blend natural wood with modern resin designs</p>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/600/400" alt="River Dining Table">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Black Walnut River Table</h3>
+                    <p class="product-price">From $3,999</p>
+                    <p class="product-description">Custom-made dining table featuring a stunning blue resin river through naturally edge black walnut.</p>
+                    <a href="#" class="btn">View Details</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/600/400" alt="Coffee Table">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Maple Coffee Table</h3>
+                    <p class="product-price">From $1,899</p>
+                    <p class="product-description">Modern coffee table with emerald resin inlays and geometric patterns.</p>
+                    <a href="#" class="btn">View Details</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/600/400" alt="Wall Art">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Abstract Wall Art</h3>
+                    <p class="product-price">From $899</p>
+                    <p class="product-description">Large-scale wall piece combining reclaimed wood with vibrant resin patterns.</p>
+                    <a href="#" class="btn">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Product card animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.product-card').forEach((card) => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
